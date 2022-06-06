@@ -7,18 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dto\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Mappings\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="11.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dto\ProjectTechnology\" />
+    <Folder Include="Dto\ProjectAuthor\" />
   </ItemGroup>
 
 </Project>
