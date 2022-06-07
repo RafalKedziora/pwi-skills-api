@@ -1,33 +1,52 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Interfaces;
 
 namespace Application.Services
 {
     public class LanguageService : ILanguageService
     {
-        public IQueryable<Language> GetAllLanguages()
+        private readonly IMapper _mapper;
+        private readonly ILanguageRepository _languageRepository;
+
+        public LanguageService(IMapper mapper, ILanguageRepository languageRepository)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+            _languageRepository = languageRepository;
         }
 
-        public Language GetLanguageById(int id)
+        public ListLanguagesDto GetAllLanguages()
         {
-            throw new NotImplementedException();
+            var languages = _languageRepository.GetAll();
+            return _mapper.Map<ListLanguagesDto>(languages);
         }
 
-        public Language AddLanguage(Language language)
+        public LanguageDto GetLanguageById(int id)
         {
-            throw new NotImplementedException();
-        }
-        
-        public void UpdateLanguage(Language language)
-        {
-            throw new NotImplementedException();
+            var language = _languageRepository.GetById(id);
+            return _mapper.Map<LanguageDto>(language);
         }
 
-        public void DeleteLanguage(Language language)
+        public LanguageDto AddLanguage(CreateLanguageDto newLanguage)
         {
-            throw new NotImplementedException();
+            var language = _mapper.Map<Language>(newLanguage);
+            _languageRepository.Add(language);
+            return _mapper.Map<LanguageDto>(language);
+        }
+
+        public void UpdateLanguage(UpdateLanguageDto language)
+        {
+            var existingLanguage = _languageRepository.GetById(language.Id);
+            var updatedLanguage = _mapper.Map(language, existingLanguage);
+            _languageRepository.Update(updatedLanguage);
+        }
+
+        public void DeleteLanguage(int id)
+        {
+            var language = _languageRepository.GetById(id);
+            _languageRepository.Delete(language);
         }
     }
 }

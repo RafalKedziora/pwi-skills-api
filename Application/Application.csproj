@@ -14,9 +14,4 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Dto\ProjectTechnology\" />
-    <Folder Include="Dto\ProjectAuthor\" />
-  </ItemGroup>
-
 </Project>

@@ -16,20 +16,27 @@ namespace Infrastructure.Repositories
         public IQueryable<Author> GetAll()
         {
             return _context.Authors
-                .Include(x => x.Projects);
+                .Include(x => x.projectAuthors);
         }
 
-        public Author GetById(Guid id)
+        public IQueryable<Author> GetAllConnectedToTheProject(Project project)
         {
             return _context.Authors
-                .Include(x => x.Projects)
+                .Include(x => x.projectAuthors)
+                .Where(x => x.projectAuthors.Any(y => y.Id == project.Id));
+        }
+
+        public Author GetById(int id)
+        {
+            return _context.Authors
+                .Include(x => x.projectAuthors)
                 .FirstOrDefault(x => x.Id == id);
         }
 
         public Author GetByNickName(string nickName)
         {
             return _context.Authors
-                .Include(x => x.Projects)
+                .Include(x => x.projectAuthors)
                 .FirstOrDefault(x => x.NickName == nickName);
         }
 

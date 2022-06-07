@@ -1,38 +1,66 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Interfaces;
 
 namespace Application.Services
 {
     public class AuthorService : IAuthorService
     {
-        public IQueryable<Author> GetAllAuthors()
+        private readonly IAuthorRepository _authorRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly IMapper _mapper;
+        public AuthorService(IAuthorRepository authorRepository, IProjectRepository projectRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _authorRepository = authorRepository;
+            _projectRepository = projectRepository;
+            _mapper = mapper;
         }
 
-        public Author GetAuthorById(Guid id)
+        public ListAuthorsDto GetAllAuthors()
         {
-            throw new NotImplementedException();
+            var authors = _authorRepository.GetAll();
+            return _mapper.Map<ListAuthorsDto>(authors);
         }
 
-        public Author GetAuthorByNickName(string nickName)
+        public ListAuthorsDto GetAllAuthorsConnectedToTheProject(int projectId)
         {
-            throw new NotImplementedException();
-        }
-        
-        public Author AddNewAuthor(Author author)
-        {
-            throw new NotImplementedException();
+            var project = _projectRepository.GetById(projectId);
+            var authors = _authorRepository.GetAllConnectedToTheProject(project);
+            return _mapper.Map<ListAuthorsDto>(authors);
         }
 
-        public void UpdateAuthor(Author comment)
+        public AuthorDto GetAuthorById(int id)
         {
-            throw new NotImplementedException();
+            var author = _authorRepository.GetById(id);
+            return _mapper.Map<AuthorDto>(author);
         }
 
-        public void DeleteAuthor(Author comment)
+        public AuthorDto GetAuthorByNickName(string nickName)
         {
-            throw new NotImplementedException();
+            var author = _authorRepository.GetByNickName(nickName);
+            return _mapper.Map<AuthorDto>(author);
+        }
+
+        public AuthorDto AddNewAuthor(CreateAuthorDto newAuthor)
+        {
+            var author = _mapper.Map<Author>(newAuthor);
+            _authorRepository.Add(author);
+            return _mapper.Map<AuthorDto>(author);
+        }
+
+        public void UpdateAuthor(int id, UpdateAuthorDto author)
+        {
+            var existingAuthor = _authorRepository.GetById(id);
+            var updatedAuthor = _mapper.Map(author, existingAuthor);
+            _authorRepository.Update(updatedAuthor);
+        }
+
+        public void DeleteAuthor(int id)
+        {
+            var author = _authorRepository.GetById(id);
+            _authorRepository.Delete(author);
         }
     }
 }

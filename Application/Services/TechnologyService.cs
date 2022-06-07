@@ -1,33 +1,52 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Interfaces;
 
 namespace Application.Services
 {
     public class TechnologyService : ITechnologyService
     {
-        public IQueryable<Technology> GetAllTechnologies()
+        private readonly ITechnologyRepository _techStackRepository;
+        private readonly IMapper _mapper;
+
+        public TechnologyService(ITechnologyRepository techStackRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _techStackRepository = techStackRepository;
+            _mapper = mapper;
         }
 
-        public Technology GetTechnologyById(int id)
+        public ListTechStacksDto GetAllTechStacks()
         {
-            throw new NotImplementedException();
+            var techStacks = _techStackRepository.GetAll();
+            return _mapper.Map<ListTechStacksDto>(techStacks);
         }
 
-        public Technology AddTechnology(Technology technology)
+        public TechStackDto GetTechStackById(int id)
         {
-            throw new NotImplementedException();
+            var techStack = _techStackRepository.GetById(id);
+            return _mapper.Map<TechStackDto>(techStack);
         }
 
-        public void UpdateTechnology(Technology technology)
+        public TechStackDto AddTechStack(CreateTechStackDto newTechStack)
         {
-            throw new NotImplementedException();
+            var techStack = _mapper.Map<TechStack>(newTechStack);
+            _techStackRepository.Add(techStack);
+            return _mapper.Map<TechStackDto>(techStack);
         }
 
-        public void DeleteTechnology(Technology technology)
+        public void UpdateTechStack(UpdateTechStackDto techStack)
         {
-            throw new NotImplementedException();
+            var existingTechStack = _techStackRepository.GetById(techStack.Id);
+            var updatedTechStack = _mapper.Map(techStack, existingTechStack);
+            _techStackRepository.Update(updatedTechStack);
+        }
+
+        public void DeleteTechStack(int id)
+        {
+            var techStack = _techStackRepository.GetById(id);
+            _techStackRepository.Delete(techStack);
         }
     }
 }

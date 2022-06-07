@@ -13,33 +13,33 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public IQueryable<Technology> GetAll()
+        public IQueryable<TechStack> GetAll()
         {
-            return _context.Technologies;
+            return _context.TechStacks;
         }
 
-        public Technology GetById(int id)
+        public TechStack GetById(int id)
         {
-            return _context.Technologies
+            return _context.TechStacks
                 .FirstOrDefault(t => t.Id == id);
         }
 
-        public Technology Add(Technology technology)
+        public TechStack Add(TechStack technology)
         {
-            _context.Technologies.Add(technology);
+            _context.TechStacks.Add(technology);
             _context.SaveChanges();
             return technology;
         }
 
-        public void Update(Technology technology)
+        public void Update(TechStack technology)
         {
-            _context.Technologies.Update(technology);
+            _context.TechStacks.Update(technology);
             _context.SaveChanges();
         }
 
-        public void Delete(Technology technology)
+        public void Delete(TechStack technology)
         {
-            _context.Technologies.Remove(technology);
+            _context.TechStacks.Remove(technology);
             _context.SaveChanges();
         }
     }

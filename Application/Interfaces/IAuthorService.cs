@@ -1,14 +1,16 @@
-﻿using Domain.Entities;
+﻿using Application.Dto;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
     public interface IAuthorService
     {
-        IQueryable<Author> GetAllAuthors();
-        Author GetAuthorById(Guid id);
-        Author GetAuthorByNickName(string nickName);
-        Author AddNewAuthor(Author author);
-        void UpdateAuthor(Author comment);
-        void DeleteAuthor(Author comment);
+        ListAuthorsDto GetAllAuthors();
+        ListAuthorsDto GetAllAuthorsConnectedToTheProject(int projectId);
+        AuthorDto GetAuthorById(int id);
+        AuthorDto GetAuthorByNickName(string nickName);
+        AuthorDto AddNewAuthor(CreateAuthorDto newAuthor);
+        void UpdateAuthor(int id, UpdateAuthorDto author);
+        void DeleteAuthor(int id);
     }
 }

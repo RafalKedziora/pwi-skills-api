@@ -1,8 +1,8 @@
 ﻿namespace Application.Dto
 {
-    public class UpdateAuthorDto
+    public class TechStackDto
     {
         public int Id { get; set; }
-        public string NickName { get; set; }
+        public string Name { get; set; }
     }
 }

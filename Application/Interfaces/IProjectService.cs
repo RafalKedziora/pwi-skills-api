@@ -1,13 +1,14 @@
-﻿using Domain.Entities;
+﻿using Application.Dto;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
     public interface IProjectService
     {
-        IQueryable<Project> GetAllProjects();
-        Project GetProjectById(int id);
-        Project AddProject(Project project);
-        void UpdateProject(Project project);
-        void DeleteProject(Project project);
+        ListProjectsDto GetAllProjects();
+        ProjectDto GetProjectById(int id);
+        ProjectDto AddProject(CreateProjectDto newProject);
+        void UpdateProject(int id, UpdateProjectDto project);
+        void DeleteProject(int id);
     }
 }

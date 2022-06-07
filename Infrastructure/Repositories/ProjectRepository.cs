@@ -18,8 +18,8 @@ namespace Infrastructure.Repositories
             return _context.Projects
                 .Include(x => x.Details)
                 .Include(x => x.Comments)
-                .Include(x => x.Authors)
-                .Include(x => x.Technologies);
+                .Include(x => x.projectAuthors)
+                .Include(x => x.projectTechnologies);
         }
 
         public Project GetById(int id)
@@ -27,8 +27,8 @@ namespace Infrastructure.Repositories
             return _context.Projects
                 .Include(x => x.Details)
                 .Include(x => x.Comments)
-                .Include(x => x.Authors)
-                .Include(x => x.Technologies)
+                .Include(x => x.projectAuthors)
+                .Include(x => x.projectTechnologies)
                 .FirstOrDefault(x => x.Id == id);
         }
 

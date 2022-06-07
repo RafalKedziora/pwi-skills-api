@@ -1,33 +1,51 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Interfaces;
 
 namespace Application.Services
 {
     public class CommentService : ICommentService
     {
-        public IQueryable<Comment> GetAllComments()
+        private readonly ICommentRepository _commentRepository;
+        private readonly IMapper _mapper;
+
+        public CommentService(ICommentRepository commentRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _commentRepository = commentRepository;
+            _mapper = mapper;
         }
 
-        public Comment GetCommentById(int id)
+        public ListCommentsDto GetAllComments()
         {
-            throw new NotImplementedException();
+            var comments = _commentRepository.GetAll();
+            return _mapper.Map<ListCommentsDto>(comments);
         }
 
-        public Comment AddComment(Comment comment)
+        public CommentDto GetCommentById(int id)
         {
-            throw new NotImplementedException();
+            var comment = _commentRepository.GetById(id);
+            return _mapper.Map<CommentDto>(comment);
+        }
+        public CommentDto AddComment(CreateCommentDto newComment)
+        {
+            var comment = _mapper.Map<Comment>(newComment);
+            _commentRepository.Add(comment);
+            return _mapper.Map<CommentDto>(comment);
         }
 
-        public void UpdateComment(Comment comment)
+        public void UpdateComment(int id, UpdateCommentDto comment)
         {
-            throw new NotImplementedException();
-        }
+            var existingComment = _commentRepository.GetById(id);
+            var updatedComment = _mapper.Map(comment, existingComment);
+            _commentRepository.Update(updatedComment);
+        }        
 
-        public void DeleteComment(Comment comment)
+        public void DeleteComment(int id)
         {
-            throw new NotImplementedException();
+            var comment = _commentRepository.GetById(id);
+            _commentRepository.Delete(comment);
         }
     }
 }

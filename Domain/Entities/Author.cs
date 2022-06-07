@@ -2,8 +2,8 @@
 {
     public class Author
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string NickName { get; set; }
-        public ICollection<Project> Projects { get; set; }
+        public IList<ProjectAuthor> projectAuthors { get; set; }
     }
 }

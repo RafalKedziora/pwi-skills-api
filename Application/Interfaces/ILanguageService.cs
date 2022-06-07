@@ -1,13 +1,14 @@
-﻿using Domain.Entities;
+﻿using Application.Dto;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
     public interface ILanguageService
     {
-        IQueryable<Language> GetAllLanguages();
-        Language GetLanguageById(int id);
-        Language AddLanguage(Language language);
-        void UpdateLanguage(Language language);
-        void DeleteLanguage(Language language);
+        ListLanguagesDto GetAllLanguages();
+        LanguageDto GetLanguageById(int id);
+        LanguageDto AddLanguage(CreateLanguageDto newLanguage);
+        void UpdateLanguage(UpdateLanguageDto language);
+        void DeleteLanguage(int id);
     }
 }

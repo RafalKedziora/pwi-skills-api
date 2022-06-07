@@ -1,13 +1,14 @@
-﻿using Domain.Entities;
+﻿using Application.Dto;
+using Domain.Entities;
 
 namespace Application.Interfaces
 {
     public interface ICommentService
     {
-        IQueryable<Comment> GetAllComments();
-        Comment GetCommentById(int id);
-        Comment AddComment(Comment comment);
-        void UpdateComment(Comment comment);
-        void DeleteComment(Comment comment);
+        ListCommentsDto GetAllComments();
+        CommentDto GetCommentById(int id);
+        CommentDto AddComment(CreateCommentDto newComment);
+        void UpdateComment(int id, UpdateCommentDto comment);
+        void DeleteComment(int id);
     }
 }

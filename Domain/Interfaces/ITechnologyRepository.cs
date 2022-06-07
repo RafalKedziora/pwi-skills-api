@@ -4,10 +4,10 @@ namespace Domain.Interfaces
 {
     public interface ITechnologyRepository
     {
-        IQueryable<Technology> GetAll();
-        Technology GetById(int id);
-        Technology Add(Technology technology);
-        void Update(Technology technology);
-        void Delete(Technology technology);
+        IQueryable<TechStack> GetAll();
+        TechStack GetById(int id);
+        TechStack Add(TechStack technology);
+        void Update(TechStack technology);
+        void Delete(TechStack technology);
     }
 }

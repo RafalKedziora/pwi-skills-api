@@ -1,33 +1,52 @@
-﻿using Application.Interfaces;
+﻿using Application.Dto;
+using Application.Interfaces;
+using AutoMapper;
 using Domain.Entities;
+using Domain.Interfaces;
 
 namespace Application.Services
 {
     public class ProjectService : IProjectService
     {
-        public IQueryable<Project> GetAllProjects()
+        private readonly IProjectRepository _projectRepository;
+        private readonly IMapper _mapper;
+
+        public ProjectService(IProjectRepository projectRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _projectRepository = projectRepository;
+            _mapper = mapper;
         }
 
-        public Project GetProjectById(int id)
+        public ListProjectsDto GetAllProjects()
         {
-            throw new NotImplementedException();
+            var projects = _projectRepository.GetAll();
+            return _mapper.Map<ListProjectsDto>(projects);
         }
 
-        public Project AddProject(Project project)
+        public ProjectDto GetProjectById(int id)
         {
-            throw new NotImplementedException();
+            var project = _projectRepository.GetById(id);
+            return _mapper.Map<ProjectDto>(project);
         }
 
-        public void UpdateProject(Project project)
+        public ProjectDto AddProject(CreateProjectDto newProject)
         {
-            throw new NotImplementedException();
+            var project = _mapper.Map<Project>(newProject);
+            _projectRepository.Add(project);
+            return _mapper.Map<ProjectDto>(project);
         }
 
-        public void DeleteProject(Project project)
+        public void UpdateProject(int id, UpdateProjectDto project)
         {
-            throw new NotImplementedException();
+            var existingProject = _projectRepository.GetById(project.Id);
+            var updatedProject = _mapper.Map(project, existingProject);
+            _projectRepository.Update(updatedProject);
+        }
+
+        public void DeleteProject(int id)
+        {
+            var project = _projectRepository.GetById(id);
+            _projectRepository.Delete(project);
         }
     }
 }
