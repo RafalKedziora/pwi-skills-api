@@ -63,9 +63,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("Open");
 
-app.MapGet("/author", (IAuthorService service) => service.GetAllAuthors());
-app.MapGet("/author/{id}", (IAuthorService service, int id) => service.GetAuthorById(id));
-app.MapGet("/projects", (IProjectService service) => service.GetAllProjects());
-app.MapGet("/projects/{id}", (IProjectService service, int id) => service.GetProjectById(id));
+app.MapGet("/projects/{languageCode}", (IProjectService service, string languageCode) => service.GetAllProjects(languageCode));
+app.MapGet("/projects/{languageCode}/{id}", (IProjectService service, int id, string languageCode) => service.GetProjectByIdByLanguage(id, languageCode));
 
 app.Run();

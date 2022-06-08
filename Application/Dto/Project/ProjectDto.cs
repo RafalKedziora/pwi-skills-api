@@ -6,9 +6,9 @@ namespace Application.Dto
     {
         public int Id { get; set; }
         public bool isActive { get; set; }
-        public ICollection<ProjectDetails> Details { get; set; }
+        public ICollection<ProjectDetailsDto> Details { get; set; }
         public ICollection<CommentDto> Comments { get; set; }
-        public ICollection<ProjectAuthor> Authors { get; set; }
-        public ICollection<ProjectTechnology> Technologies { get; set; }
+        public IList<AuthorProjectDto> Authors { get; set; }
+        public IList<TechStackProjectDto> TechStacks { get; set; }        
     }
 }

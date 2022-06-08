@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string NickName { get; set; }
-        public IList<ProjectAuthor> projectAuthors { get; set; }
+        //public IList<ProjectAuthor> projectAuthors { get; set; }
+        public IList<Project> Projects { get; set; }
     }
 }

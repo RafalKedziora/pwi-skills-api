@@ -13,8 +13,10 @@ namespace Application.Mappings
                 #region Author
 
                 cfg.CreateMap<Author, AuthorDto>();
+                cfg.CreateMap<Author, AuthorProjectDto>();
                 cfg.CreateMap<CreateAuthorDto, Author>();
                 cfg.CreateMap<UpdateAuthorDto, Author>();
+                cfg.CreateMap<AuthorProjectDto, Author>();
                 cfg.CreateMap<IQueryable<Author>, ListAuthorsDto>()
                 .ForMember(dest => dest.Authors, act => act.MapFrom(src => src))
                 .ForMember(dest => dest.Count, act => act.MapFrom(src => src.Count()));
@@ -54,11 +56,22 @@ namespace Application.Mappings
 
                 #endregion
 
+                #region ProjectDetails
+
+                cfg.CreateMap<ProjectDetails, ProjectDetailsDto>();
+                cfg.CreateMap<CreateProjectDetailsDto, ProjectDetails>();
+                cfg.CreateMap<UpdateProjectDetailsDto, ProjectDetails>();
+
+                #endregion
+
+
                 #region Technology
 
                 cfg.CreateMap<TechStack, TechStackDto>();
+                cfg.CreateMap<TechStack, TechStackProjectDto>();
                 cfg.CreateMap<CreateTechStackDto, TechStack>();
                 cfg.CreateMap<UpdateTechStackDto, TechStack>();
+                cfg.CreateMap<TechStackProjectDto, TechStack>();
                 cfg.CreateMap<IQueryable<TechStack>, ListTechStacksDto>()
                 .ForMember(dest => dest.TechStacks, act => act.MapFrom(src => src))
                 .ForMember(dest => dest.Count, act => act.MapFrom(src => src.Count()));

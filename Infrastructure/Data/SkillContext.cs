@@ -31,10 +31,45 @@ namespace Infrastructure.Data
                 .HasMany(p => p.Comments)
                 .WithOne(pd => pd.Project)
                 .HasForeignKey(pd => pd.ProjectId);
-            });
 
-            modelBuilder.Entity<ProjectAuthor>().HasKey(pa => new { pa.ProjectId, pa.AuthorId });
-            modelBuilder.Entity<ProjectTechnology>().HasKey(pt => new { pt.ProjectId, pt.TechnologyId });
+                eb.HasMany(p => p.Authors)
+                .WithMany(a => a.Projects)
+                .UsingEntity<ProjectAuthor>();
+
+                eb.HasMany(p => p.TechStacks)
+                .WithMany(t => t.Projects)
+                .UsingEntity<ProjectTechnology>(
+                     w => w.HasOne(pt => pt.Technology)
+                    .WithMany()
+                    .HasForeignKey(pt => pt.TechnologyId),
+
+                    w => w
+                    .HasOne(pt => pt.Project)
+                    .WithMany()
+                    .HasForeignKey(pt => pt.ProjectId),
+
+                     pt =>
+                     {
+                         pt.HasKey(x => new { x.ProjectId, x.TechnologyId });
+                     });
+
+                eb.HasMany(p => p.Authors)
+                .WithMany(t => t.Projects)
+                .UsingEntity<ProjectAuthor>(
+                     w => w.HasOne(pt => pt.Author)
+                    .WithMany()
+                    .HasForeignKey(pt => pt.AuthorId),
+
+                    w => w
+                    .HasOne(pt => pt.Project)
+                    .WithMany()
+                    .HasForeignKey(pt => pt.ProjectId),
+
+                     pt =>
+                     {
+                         pt.HasKey(x => new { x.ProjectId, x.AuthorId });
+                     });
+            });
         }
     }
 }

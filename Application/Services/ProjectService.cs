@@ -17,15 +17,21 @@ namespace Application.Services
             _mapper = mapper;
         }
 
-        public ListProjectsDto GetAllProjects()
+        public ListProjectsDto GetAllProjects(string languageCode)
         {
-            var projects = _projectRepository.GetAll();
+            var projects = _projectRepository.GetAll(languageCode);
             return _mapper.Map<ListProjectsDto>(projects);
         }
 
         public ProjectDto GetProjectById(int id)
         {
             var project = _projectRepository.GetById(id);
+            return _mapper.Map<ProjectDto>(project);
+        }
+
+        public ProjectDto GetProjectByIdByLanguage(int id, string languageCode)
+        {
+            var project = _projectRepository.GetByIdByLanguage(id, languageCode);
             return _mapper.Map<ProjectDto>(project);
         }
 

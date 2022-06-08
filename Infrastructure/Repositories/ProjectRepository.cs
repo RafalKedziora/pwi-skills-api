@@ -13,13 +13,13 @@ namespace Infrastructure.Repositories
             _context = context;
         }
 
-        public IQueryable<Project> GetAll()
+        public IQueryable<Project> GetAll(string languageCode)
         {
             return _context.Projects
-                .Include(x => x.Details)
+                .Include(x => x.Details.Where(x => x.Language.Code == languageCode))
                 .Include(x => x.Comments)
-                .Include(x => x.projectAuthors)
-                .Include(x => x.projectTechnologies);
+                .Include(x => x.Authors)
+                .Include(x => x.TechStacks);
         }
 
         public Project GetById(int id)
@@ -27,8 +27,18 @@ namespace Infrastructure.Repositories
             return _context.Projects
                 .Include(x => x.Details)
                 .Include(x => x.Comments)
-                .Include(x => x.projectAuthors)
-                .Include(x => x.projectTechnologies)
+                .Include(x => x.Authors)
+                .Include(x => x.TechStacks)
+                .FirstOrDefault(x => x.Id == id);
+        }
+
+        public Project GetByIdByLanguage(int id, string languageCode)
+        {
+            return _context.Projects
+                .Include(x => x.Details.Where(x => x.Language.Code == languageCode))
+                .Include(x => x.Comments)
+                .Include(x => x.Authors)
+                .Include(x => x.TechStacks)
                 .FirstOrDefault(x => x.Id == id);
         }
 

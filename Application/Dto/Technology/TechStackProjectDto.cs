@@ -2,10 +2,9 @@
 
 namespace Application.Dto
 {
-    public class TechStackDto
+    public class TechStackProjectDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public IList<ProjectDto> Projects { get; set; }
     }
 }
