@@ -35,7 +35,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.AddDbContext<SkillContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("RevoSkillCS")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("RevoSkillCS")));
 builder.Services.AddTransient<DataSeeder>();
 #endregion
 
@@ -65,5 +65,6 @@ app.UseCors("Open");
 
 app.MapGet("/projects/{languageCode}", (IProjectService service, string languageCode) => service.GetAllProjects(languageCode));
 app.MapGet("/projects/{languageCode}/{id}", (IProjectService service, int id, string languageCode) => service.GetProjectByIdByLanguage(id, languageCode));
+app.MapGet("/languages", (ILanguageService service) => service.GetAllLanguages());
 
 app.Run();
